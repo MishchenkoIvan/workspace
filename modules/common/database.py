@@ -57,4 +57,26 @@ class Database():
         record = self.cursor.fetchall()
         return record
         
-              
+    def insert_product_invalid(self, product_id, name, description, qnt):
+        # This method is intentionally incorrect for testing purposes
+        query = f"INSERT INTO products (id, name, description, quantity) \
+            VALUES ({product_id}, {name}, '{description}', {qnt})"
+        try:
+            self.cursor.execute(query)
+            self.connection.commit()
+        except Exception as e:
+            self.connection.rollback()
+            raise e
+
+    def insert_special_characters(self, product_id, name, description, qnt):
+        self.delete_product_by_id(product_id)  # Ensure no conflicts with existing IDs
+        query = f"INSERT INTO products (id, name, description, quantity) \
+            VALUES ({product_id}, '{name}', '{description}', {qnt})"
+        self.cursor.execute(query)
+        self.connection.commit()
+
+    def insert_product_with_null(self, product_id, name, description, qnt):
+        query = f"INSERT INTO products (id, name, description, quantity) \
+            VALUES ({product_id}, {name}, '{description}', {qnt})"
+        self.cursor.execute(query)
+        self.connection.commit()
