@@ -1,5 +1,0 @@
-<<<<<<< HEAD
-main_file
-=======
-main branch
->>>>>>> iss53
